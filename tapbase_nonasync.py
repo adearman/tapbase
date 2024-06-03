@@ -1,7 +1,7 @@
 import requests
 import time
 
-def check_ref(ref_value):
+def check_ref(ref_value, counter):
     url = 'https://lordcoins.xyz/checkref.php'
     headers = {
         'Host': 'lordcoins.xyz',
@@ -41,7 +41,7 @@ def start_loop():
         ref_value = file.read().strip()
     counter = 1    
     while True:
-        check_ref(ref_value)
+        check_ref(ref_value,counter)
         counter += 1
         time.sleep(1)  # Tambahkan jeda untuk menghindari permintaan terlalu sering
 
