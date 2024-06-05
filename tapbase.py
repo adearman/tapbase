@@ -2,7 +2,7 @@ import aiohttp
 import asyncio
 
 async def check_ref(ref_value, counter):
-    url = 'https://lordcoins.xyz/checkref.php'
+    url = 'https://lordcoins.xyz/refcheck.php'
     headers = {
         'Host': 'lordcoins.xyz',
         'sec-ch-ua': '"Microsoft Edge";v="125", "Chromium";v="125", "Not.A/Brand";v="24", "Microsoft Edge WebView2";v="125"',
@@ -24,19 +24,24 @@ async def check_ref(ref_value, counter):
     }
     data = {
         'ref': ref_value,
-        'type': 2
+        'type': 1,
+        
     }
     async with aiohttp.ClientSession() as session:
         try:
             async with session.post(url, headers=headers, data=data) as response:
                 result = await response.text()
+                status_code = response.status
+                print(f'Status Kode: {status_code}')
+                print(result)
                 if result == '1':
                     print(f'Reff Sukses {counter}')
                 else:
+                    print(result)
                     print('Reff Gagal')
         except Exception as e:
             print('Error:', str(e))
-
+            print(f'Detail Kesalahan: {str(e)}')
 async def start_loop():
     with open('id_ref.txt', 'r') as file:
         ref_value = file.read().strip()
